@@ -4,6 +4,10 @@ import Request from '@/src/helper/Request';
 import { productType } from '@/src/types/types';
 import Link from 'next/link';
 import React from 'react';
+import Button from './Button';
+import Filter from './Filter';
+import Pagination from './Pagination';
+
 type searchParamsType = {
   category?: string;
   parentCategory?: string;
@@ -26,8 +30,8 @@ type productResponseType =
       success: true;
       data: {
         products: productType[];
+        totalProducts: number;
       };
-      message: string;
     };
 
 const ProductSection = async ({
@@ -56,83 +60,10 @@ const ProductSection = async ({
     (productResponse?.success && productResponse?.data?.products) || [];
   console.log({ products });
 
-  function handleFilterByPageSize(
-    arg0: number
-  ): React.MouseEventHandler<HTMLButtonElement> | undefined {
-    return () => {
-      pageSize = arg0;
-    };
-  }
-
-  function handleByCurrentPage(
-    p0: number
-  ): React.MouseEventHandler<HTMLButtonElement> | undefined {
-    return () => {
-      currentPage = p0;
-     }
-  }
-
   return (
     <div className='col-lg-9 col-md-8'>
       <div className='row pb-3'>
-        <div className='col-12 pb-1'>
-          <div className='d-flex align-items-center justify-content-between mb-4'>
-            <div>
-              <button className='btn btn-sm btn-light'>
-                <i className='fa fa-th-large' />
-              </button>
-              <button className='btn btn-sm btn-light ml-2'>
-                <i className='fa fa-bars' />
-              </button>
-            </div>
-            <div className='ml-2'>
-              <div className='btn-group'>
-                <button
-                  type='button'
-                  className='btn btn-sm btn-light dropdown-toggle'
-                  data-toggle='dropdown'>
-                  Sorting
-                </button>
-                <div className='dropdown-menu dropdown-menu-right'>
-                  <Link className='dropdown-item' href='#'>
-                    Latest
-                  </Link>
-                  <Link className='dropdown-item' href='#'>
-                    Popularity
-                  </Link>
-                  <Link className='dropdown-item' href='#'>
-                    Best Rating
-                  </Link>
-                </div>
-              </div>
-              <div className='btn-group ml-2'>
-                <button
-                  type='button'
-                  className='btn btn-sm btn-light dropdown-toggle'
-                  data-toggle='dropdown'>
-                  Showing
-                </button>
-                <div className='dropdown-menu dropdown-menu-right'>
-                  <button
-                    className='dropdown-item'
-                    onClick={handleFilterByPageSize(10)}>
-                    10
-                  </button>
-                  <button
-                    className='dropdown-item'
-                    onClick={handleFilterByPageSize(20)}>
-                    20
-                  </button>
-                  <button
-                    className='dropdown-item'
-                    onClick={handleFilterByPageSize(30)}>
-                    30
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Filter />
         {products.length > 0 ? (
           products?.map((product) => (
             <ProductCard
@@ -144,6 +75,7 @@ const ProductSection = async ({
               stock={100}
               className='col-lg-4 col-md-6 col-sm-6 pb-1'
               alt={product.media[0]?.alt || `${product.name}`}
+              slug={product.slug}
             />
           ))
         ) : (
@@ -152,43 +84,13 @@ const ProductSection = async ({
           </div>
         )}
         <div className='col-12'>
-          <nav>
-            <ul className='pagination justify-content-center'>
-              <li className='page-item disabled'>
-                <button className='page-link' onClick={handleByCurrentPage(1)}>
-                  Previous
-                </button>
-              </li>
-              <li className='page-item active'>
-                <button
-                  className='page-link'
-                  onClick={handleByCurrentPage(currentPage)}>
-                  {currentPage - 1}
-                </button>
-              </li>
-              <li className='page-item'>
-                <button
-                  className='page-link'
-                  onClick={handleByCurrentPage(currentPage)}>
-                  {currentPage}
-                </button>
-              </li>
-              <li className='page-item'>
-                <button
-                  className='page-link'
-                  onClick={handleByCurrentPage(currentPage)}>
-                  {currentPage + 1}
-                </button>
-              </li>
-              <li className='page-item'>
-                <button
-                  className='page-link'
-                  onClick={handleByCurrentPage(currentPage)}>
-                  Next
-                </button>
-              </li>
-            </ul>
-          </nav>
+          <Pagination
+            availableProducts={
+              (productResponse?.success &&
+                productResponse?.data?.totalProducts) ||
+              0
+            }
+          />
         </div>
       </div>
     </div>
