@@ -30,9 +30,10 @@ export default function Search() {
       setOptions([]);
       setTimeout(async () => {
         let fetchProducts = await Request.get(Api.SEARCH_PRODUCTS);
-        setProducts(await fetchProducts.data.products);
-        if (fetchProducts.data.products.length > 0)
-          setOptions(await fetchProducts.data.products);
+        console.log({ fetchProducts });
+        if (fetchProducts?.data?.products.length > 0)
+         { setProducts(await fetchProducts.data.products);
+          setOptions(await fetchProducts.data.products);}
         else {
           setOptions([
             {
