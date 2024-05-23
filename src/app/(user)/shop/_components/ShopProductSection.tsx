@@ -1,24 +1,77 @@
 import ProductCard from '@/src/components/cards/ProductCard';
 import Api from '@/src/constants/Api';
 import Request from '@/src/helper/Request';
-import { categoryType, parentCategoryType } from '@/src/types/types';
-import {
-  useRouter,
-  useSelectedLayoutSegment,
-  useSelectedLayoutSegments,
-} from 'next/navigation';
+import { productType } from '@/src/types/types';
+import Link from 'next/link';
 import React from 'react';
+type searchParamsType = {
+  category?: string;
+  parentCategory?: string;
+  maxPrice?: string;
+  minPrice?: string;
+  name?: string;
+  sortBy?: string;
+  currentPage?: number;
+  pageSize?: number;
+  color?: string;
+  size?: string;
+};
+type productResponseType =
+  | {
+      success: false;
+      data: [];
+      message: string;
+    }
+  | {
+      success: true;
+      data: {
+        products: productType[];
+      };
+      message: string;
+    };
 
 const ProductSection = async ({
-  searchParams: { category },
+  searchParams,
 }: {
-  searchParams: { category: string };
+  searchParams: searchParamsType;
 }) => {
-  const parentCategoriesData = await Request.get(Api.PARENT_CATEGORIES);
-  const parentCategories = (await parentCategoriesData.success)
-    ? parentCategoriesData.data
-    : [];
-  console.log(await parentCategories[0]);
+  //  get string from searchParams for params
+  const params = `?${Object.entries(searchParams)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')}`;
+  let currentPage = 1;
+  let pageSize = 10;
+  let sortBy = 'newest';
+  let category = '';
+  let parentCategory = '';
+  let maxPrice = '';
+  let minPrice = '';
+  let name = '';
+  let color = '';
+  let size = '';
+  const productResponse: productResponseType = await Request.get(
+    `${Api.SEARCH_PRODUCTS}${params}`
+  );
+  const products: productType[] =
+    (productResponse?.success && productResponse?.data?.products) || [];
+  console.log({ products });
+
+  function handleFilterByPageSize(
+    arg0: number
+  ): React.MouseEventHandler<HTMLButtonElement> | undefined {
+    return () => {
+      pageSize = arg0;
+    };
+  }
+
+  function handleByCurrentPage(
+    p0: number
+  ): React.MouseEventHandler<HTMLButtonElement> | undefined {
+    return () => {
+      currentPage = p0;
+     }
+  }
+
   return (
     <div className='col-lg-9 col-md-8'>
       <div className='row pb-3'>
@@ -41,15 +94,15 @@ const ProductSection = async ({
                   Sorting
                 </button>
                 <div className='dropdown-menu dropdown-menu-right'>
-                  <a className='dropdown-item' href='#'>
+                  <Link className='dropdown-item' href='#'>
                     Latest
-                  </a>
-                  <a className='dropdown-item' href='#'>
+                  </Link>
+                  <Link className='dropdown-item' href='#'>
                     Popularity
-                  </a>
-                  <a className='dropdown-item' href='#'>
+                  </Link>
+                  <Link className='dropdown-item' href='#'>
                     Best Rating
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className='btn-group ml-2'>
@@ -60,130 +113,79 @@ const ProductSection = async ({
                   Showing
                 </button>
                 <div className='dropdown-menu dropdown-menu-right'>
-                  <a className='dropdown-item' href='#'>
+                  <button
+                    className='dropdown-item'
+                    onClick={handleFilterByPageSize(10)}>
                     10
-                  </a>
-                  <a className='dropdown-item' href='#'>
+                  </button>
+                  <button
+                    className='dropdown-item'
+                    onClick={handleFilterByPageSize(20)}>
                     20
-                  </a>
-                  <a className='dropdown-item' href='#'>
+                  </button>
+                  <button
+                    className='dropdown-item'
+                    onClick={handleFilterByPageSize(30)}>
                     30
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {parentCategories.map((category: categoryType | parentCategoryType) => (
-          <ProductCard
-            image={category.media.url||'/img/product-1.jpg'}
-            name={category.name}
-            price={100}
-            stock={100}
-            className='col-lg-4 col-md-6 col-sm-6 pb-1'
-            alt={category.media.alt}
-          />
-        ))}
-
-        {/* <ProductCard
-          image='/img/product-1.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={''}
-        />
-        <ProductCard
-          image='/img/product-2.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-3.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-4.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-5.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-6.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-7.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-8.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        />
-        <ProductCard
-          image='/img/product-9.jpg'
-          name='Product Name Goes Here'
-          price={100}
-          stock={100}
-          className='col-lg-4 col-md-6 col-sm-6 pb-1'
-          alt={'this is the photo'}
-        /> */}
+        {products.length > 0 ? (
+          products?.map((product) => (
+            <ProductCard
+              key={product.id}
+              image={product.media[0]?.url || '/img/product-1.jpg'}
+              name={product.name}
+              markedPrice={product.markedPrice}
+              discount={product.discount}
+              stock={100}
+              className='col-lg-4 col-md-6 col-sm-6 pb-1'
+              alt={product.media[0]?.alt || `${product.name}`}
+            />
+          ))
+        ) : (
+          <div className='col-12 text-center h-100 d-flex align-items-center justify-content-center'>
+            <h1>No Products Found</h1>
+          </div>
+        )}
         <div className='col-12'>
           <nav>
             <ul className='pagination justify-content-center'>
               <li className='page-item disabled'>
-                <a className='page-link' href='#'>
+                <button className='page-link' onClick={handleByCurrentPage(1)}>
                   Previous
-                </a>
+                </button>
               </li>
               <li className='page-item active'>
-                <a className='page-link' href='#'>
-                  1
-                </a>
+                <button
+                  className='page-link'
+                  onClick={handleByCurrentPage(currentPage)}>
+                  {currentPage - 1}
+                </button>
               </li>
               <li className='page-item'>
-                <a className='page-link' href='#'>
-                  2
-                </a>
+                <button
+                  className='page-link'
+                  onClick={handleByCurrentPage(currentPage)}>
+                  {currentPage}
+                </button>
               </li>
               <li className='page-item'>
-                <a className='page-link' href='#'>
-                  3
-                </a>
+                <button
+                  className='page-link'
+                  onClick={handleByCurrentPage(currentPage)}>
+                  {currentPage + 1}
+                </button>
               </li>
               <li className='page-item'>
-                <a className='page-link' href='#'>
+                <button
+                  className='page-link'
+                  onClick={handleByCurrentPage(currentPage)}>
                   Next
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
