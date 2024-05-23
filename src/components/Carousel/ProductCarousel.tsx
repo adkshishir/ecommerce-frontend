@@ -23,10 +23,10 @@ const ProductCarousel = () => {
             {/* <ProductCard name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100 '/> */}
 
           </div>
-            <ProductCard name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>
-            <ProductCard name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>
-            <ProductCard name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>
-            <ProductCard name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>   
+            < ProductCard alt=''  name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>
+            < ProductCard alt=''  name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>
+            < ProductCard alt=''  name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>
+            < ProductCard alt=''  name='Product Name' image='/img/product-1.jpg' price={100} stock={100} className='w-100 h-100'/>   
        
         {/* <div>
           <Image
