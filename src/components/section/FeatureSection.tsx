@@ -15,8 +15,8 @@ const FeatureSection = () => {
           homePageData.data.popularProducts?.map((product, index) => (
             <ProductCard
               key={index}
-              image={product.media.url}
-              alt={product.media.alt}
+              image={product.media?.url}
+              alt={product.media?.alt}
               name={product.name}
               price={product.price}
               stock={product.totalStock}
