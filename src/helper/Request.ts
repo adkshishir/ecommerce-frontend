@@ -1,12 +1,12 @@
-import Api from '../constants/Api';
 async function get(url: string) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url,{cache:'no-cache'});
     const data = await response.json();
     return data;
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
+      message: error.message,
       data: [],
     };
   }
@@ -15,6 +15,7 @@ async function post(url: string, formData: any) {
   try {
     const response: Response = await fetch(url, {
       method: 'POST',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
       },
