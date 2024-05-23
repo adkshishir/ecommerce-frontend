@@ -5,7 +5,10 @@ export type homeDataResponseType =
         popularProducts: Array<productType>;
         latestProducts: Array<productType>;
         categories: Array<categoryType>;
-        menuData: Array<menuWithParentCategory | menuWithoutParentCategory>;
+        menuData: {
+          menuDataWithParentCategories: Array<menuDataWithParentCategories>;
+          menuDataWithOutParentCategories: Array<menuDataWithOutParentCategories>;
+        };
         parentCategories: Array<parentCategoryType>;
         specialOffer: Array<categoryType>;
       };
@@ -15,17 +18,22 @@ export type homeDataResponseType =
       data: [];
     };
 
-export type menuWithParentCategory = {
+export type menuDataWithParentCategories = {
   id: number;
   name: string;
   slug: string;
   parentId: number;
+  categories: Array<categoryType>;
 };
 
-export type menuWithoutParentCategory = {
+export type menuDataWithOutParentCategories = {
   id: number;
   name: string;
   slug: string;
+  products: Array<productType>;
+  _count: {
+    products:number
+  }
 };
 export type productType = {
   id: number;
@@ -40,7 +48,7 @@ export type productType = {
   media: {
     url: string;
     alt: string;
-  };
+  }[];
 };
 
 export type categoryType = {
