@@ -25,7 +25,7 @@ export default async function RootLayout({
   return (
     <MyProvider>
       <SetData homeData={homeData} products={products} />
-      {homeData.success && <Header />}
+      {<Header />}
       {children}
       <Footer />
     </MyProvider>
