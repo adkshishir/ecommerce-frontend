@@ -20,7 +20,7 @@ const SetData = ({
       setHomePageData({
         ...homeData,
       });
-      setProducts(products.data.products);
+      setProducts(products?.data?.products);
     };
 
     fetchData();
