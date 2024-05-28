@@ -1,6 +1,7 @@
 'use client';
 import { MyContext } from '@/src/context/MyProvider';
 import { categoryType, parentCategoryType } from '@/src/types/types';
+import Image from 'next/image';
 import React, { useContext } from 'react';
 const Carousel = () => {
   const { homePageData } = useContext(MyContext);
@@ -39,8 +40,9 @@ const Carousel = () => {
                   homePageData.data.parentCategories?.map((category, index) => (
                     <div
                       key={index}
-                      className={
-                       `carousel-item ${index === 0 ? 'active' : ''} position-relative` }
+                      className={`carousel-item ${
+                        index === 0 ? 'active' : ''
+                      } position-relative`}
                       style={{ height: 430 }}>
                       <img
                         className='position-absolute w-100 h-100'
@@ -58,46 +60,57 @@ const Carousel = () => {
                           </p>
                           <a
                             className='btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp'
-                            href={`/${category.slug}`}>
+                            href={`/shop?category=${category.slug}`}>
                             Shop Now
                           </a>
                         </div>
                       </div>
                     </div>
                   ))}
-
               </div>
             </div>
           </div>
           <div className='col-lg-4'>
-            <div className='product-offer mb-30' style={{ height: 200 }}>
-              <img
-                className='img-fluid'
-                src='img/offer-1.jpg'
-                alt='this is image'
-              />
-              <div className='offer-text'>
-                <h6 className='text-white text-uppercase'>Save 20%</h6>
-                <h3 className='text-white mb-3'>Special Offer</h3>
-                <a href='' className='btn btn-primary'>
-                  Shop Now
-                </a>
-              </div>
-            </div>
-            <div className='product-offer mb-30' style={{ height: 200 }}>
-              <img
-                className='img-fluid'
-                src='img/offer-2.jpg'
-                alt='this is image'
-              />
-              <div className='offer-text'>
-                <h6 className='text-white text-uppercase'>Save 20%</h6>
-                <h3 className='text-white mb-3'>Special Offer</h3>
-                <a href='' className='btn btn-primary'>
-                  Shop Now
-                </a>
-              </div>
-            </div>
+            {
+              homePageData?.success &&homePageData.data.specialCategories?.map((category, index) => (
+              index<2&&  <div
+                  key={index}
+                  className='product-offer mb-30'
+                  style={{ height: 200 }}>
+                  <Image
+                    height={1000}
+                    width={1000}
+                    className='img-fluid'
+                    src={category?.media?.url || '/img/offer-2.jpg'}
+                    alt={category?.media?.alt}
+                  />
+                  <div className='offer-text'>
+                    <h6 className='text-white text-uppercase'>Save 20%</h6>
+                    <h3 className='text-white mb-3'>Special Offer</h3>
+                    <a
+                      className='btn btn-primary'
+                      href={`/shop?category=${category.slug}`}>
+                      Shop Now
+                    </a>
+                  </div>
+                </div>
+                
+              ))
+              // <div className='product-offer mb-30' style={{ height: 200 }}>
+              //   <img
+              //     className='img-fluid'
+              //     src='img/offer-1.jpg'
+              //     alt='this is image'
+              //   />
+              //   <div className='offer-text'>
+              //     <h6 className='text-white text-uppercase'>Save 20%</h6>
+              //     <h3 className='text-white mb-3'>Special Offer</h3>
+              //     <a href='' className='btn btn-primary'>
+              //       Shop Now
+              //     </a>
+              //   </div>
+              // </div>
+            }
           </div>
         </div>
       </div>
