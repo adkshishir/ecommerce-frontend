@@ -4,6 +4,7 @@ import './globals.css';
 import Request from '../helper/Request';
 import Api from '../constants/Api';
 import { homeDataResponseType } from '../types/types';
+import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -50,6 +51,7 @@ export default async function RootLayout({
         <link href='/css/style.css' rel='stylesheet' />
       </head>
       <body className={inter.className}>
+        <Toaster />
         {children}
         {/* <!-- Back to Top --> */}
         <a href='#' className='btn btn-primary back-to-top'>
