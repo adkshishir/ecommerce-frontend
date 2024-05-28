@@ -19,12 +19,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const homeData: homeDataResponseType = await Request.get(Api.HOME_PAGE);
-  const products = await Request.get(Api.SEARCH_PRODUCTS);
-
   return (
     <MyProvider>
-      <SetData homeData={homeData} products={products} />
+      <SetData />
       {<Header />}
       {children}
       <Footer />
