@@ -17,9 +17,12 @@ const FeatureSection = () => {
               key={index}
               image={product.media?.url}
               alt={product.media?.alt}
+              id={product.id}
+              slug={product.slug}
               name={product.name}
-              price={product.price}
-              stock={product.totalStock}
+              markedPrice={product.markedPrice}
+              discount={product.discount}
+              stock={product.totalStocks}
             />
           ))}
       </div>
