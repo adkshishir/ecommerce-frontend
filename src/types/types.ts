@@ -43,12 +43,26 @@ export type productType = {
   slug: string;
   discount: number;
   markedPrice: number;
-  totalStock: number;
+  totalStocks: number;
   categoryId: number;
-  media: {
-    url: string;
-    alt: string;
-  }[];
+  additionalInformation: string;
+  details: string;
+  variants: {
+    id: number;
+    type: string;
+    value: string;
+    productId: number;
+    name: string;
+  };
+  media:
+    | {
+        url: string;
+        alt: string;
+      }[]
+    | {
+        url: string;
+        alt: string;
+      };
 };
 
 export type categoryType = {
@@ -71,5 +85,35 @@ export type parentCategoryType = {
   media: {
     url: string;
     alt: string;
+  };
+};
+export type profileType = {
+  name: string;
+  email: string;
+  id: string;
+  _count: {
+    WishLists: number;
+    Orders: number;
+    carts: number;
+  };
+  role: string;
+  carts: {
+    id: number;
+    quantity: number;
+    product: {
+      name: string;
+      slug: string;
+    };
+  }[];
+  wishList: {
+    id: number;
+    product: {
+      name: string;
+      slug: string;
+    };
+  }[];
+  order: {
+    id: number;
+    status: string;
   };
 };
