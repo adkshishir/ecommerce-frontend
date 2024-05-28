@@ -54,7 +54,22 @@ const ProductCard = ({
       toast.error('Error while adding product');
     }
   }
-  function handleWishList() {}
+ async function handleWishList(id: number) {
+   const product = await Request.post(
+     Api.WISHLIST,
+     {
+       productId: id,
+     },
+     localStorage.getItem('token') || ''
+   );
+   let profile = await Request.get(
+     Api.AUTH_PROFILE,
+     localStorage.getItem('token') || ''
+   );
+   setProfile(profile?.data);
+   toast.success('Product Updated to wishlist successfully');
+   console.log(product);
+ }
   function handleRefresh() {}
   function handleSearch() {
     const params = new URLSearchParams(searchParams.toString());
@@ -80,7 +95,9 @@ const ProductCard = ({
               <i className='fa fa-shopping-cart' />
             </Button>
             <Button
-              onClick={handleWishList}
+              onClick={() => {
+                handleWishList(id);
+              }}
               className='btn btn-outline-dark btn-square'>
               <i className='fa fa-heart' />
             </Button>
@@ -99,7 +116,7 @@ const ProductCard = ({
             {name}
           </a>
           <div className='d-flex align-items-center justify-content-center mt-2'>
-            <h5>{markedPrice - discount}</h5>
+            <h5>Rs.{markedPrice - discount}</h5>
             <h6 className='text-muted ml-2'>
               <del>Rs{markedPrice}</del>
             </h6>
