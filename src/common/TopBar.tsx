@@ -1,12 +1,16 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Search from './Search';
 import Link from 'next/link';
 import { ifError } from 'assert';
 import { useRouter } from 'next/navigation';
+import { MyContext } from '../context/MyProvider';
+import Api from '../constants/Api';
+import Request from '../helper/Request';
 
 export const TopBar = () => {
   const router = useRouter();
+  const { profile, setProfile } = useContext(MyContext);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   useEffect(() => {
@@ -14,10 +18,13 @@ export const TopBar = () => {
       setIsLoggedIn(true);
     }
   }, []);
+
   async function handleLogout() {
     localStorage?.removeItem('token');
     localStorage?.removeItem('profile');
     setIsLoggedIn(false);
+    let profile = await Request.get(Api.AUTH_PROFILE, '');
+    setProfile(profile?.data);
     router.push('/');
   }
   return (
@@ -48,7 +55,7 @@ export const TopBar = () => {
                   type='button'
                   className='btn btn-sm btn-light dropdown-toggle'
                   data-toggle='dropdown'>
-                  My Account
+                  {profile?.name || ' My Account'}
                 </button>
                 <div className='dropdown-menu dropdown-menu-right'>
                   {isLoggedIn ? (
@@ -139,10 +146,10 @@ export const TopBar = () => {
           <div className='col-lg-4'>
             <a href='/' className='text-decoration-none'>
               <span className='h1 text-uppercase text-primary bg-dark px-2'>
-                Multi
+                E
               </span>
               <span className='h1 text-uppercase text-dark bg-primary px-2 ml-n1'>
-                Shop
+                Comm
               </span>
             </a>
           </div>
@@ -155,7 +162,7 @@ export const TopBar = () => {
           </div>
           <div className='col-lg-4 col-6 text-right'>
             <p className='m-0'>Customer Service</p>
-            <h5 className='m-0'>+012 345 6789</h5>
+            <h5 className='m-0'>9800000000</h5>
           </div>
         </div>
       </div>
