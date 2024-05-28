@@ -9,6 +9,7 @@ const PRODUCTS = `${BASE_URL}/api/products`;
 const ADD_TO_CART = `${BASE_URL}/api/cart`;
 const CART = `${BASE_URL}/api/cart`;
 const AUTH_PROFILE = `${BASE_URL}/api/auth/profile`;
+const WISHLIST = `${BASE_URL}/api/wishlist`;
 
 export default {
   BASE_URL,
@@ -21,6 +22,7 @@ export default {
   PRODUCTS,
   ADD_TO_CART,
   CART,
-  AUTH_PROFILE
+  AUTH_PROFILE,
+  WISHLIST
 };
  
