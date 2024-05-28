@@ -54,15 +54,11 @@ export type productType = {
     productId: number;
     name: string;
   };
-  media:
-    | {
-        url: string;
-        alt: string;
-      }[]
-    | {
-        url: string;
-        alt: string;
-      };
+  media: media | media[];
+};
+export type media = {
+  url: string;
+  alt: string;
 };
 
 export type categoryType = {

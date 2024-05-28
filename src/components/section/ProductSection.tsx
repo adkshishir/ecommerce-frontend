@@ -22,11 +22,14 @@ const ProductSection = () => {
         {products?.map((product, index) => (
           <ProductCard
             key={index}
-            image={product?.media?.url}
-            alt={product?.media?.alt}
+            image={Array.isArray(product?.media) ? product?.media[0]?.url : product?.media?.url}
+            alt={Array.isArray(product?.media) ? product?.media[0]?.alt : product?.media?.alt}
+            slug={product?.slug}
             name={product?.name}
-            price={product?.price}
-            stock={product?.totalStock}
+            markedPrice={product?.markedPrice}
+            discount={product?.discount}
+            id={product?.id}
+            stock={product?.totalStocks}
           />
         ))}
       </div>
