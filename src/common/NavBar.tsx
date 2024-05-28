@@ -31,6 +31,7 @@ const NavBar = () => {
     }
     fetchData();
   }, [homePageData]);
+ 
   return (
     <>
       {/* Navbar Start */}
@@ -158,7 +159,7 @@ const NavBar = () => {
                     <span
                       className='badge text-secondary border border-secondary rounded-circle'
                       style={{ paddingBottom: 2 }}>
-                      {profile?._count?.WishLists||0}
+                      {profile?._count?.Wishlists||0}
                     </span>
                   </Link>
                   <Link href='/cart' className='btn px-0 ml-3'>
