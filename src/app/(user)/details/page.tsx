@@ -40,8 +40,8 @@ const page = async ({ searchParams, params }: any) => {
                       <img
                         className='w-100 h-100'
                        
-                        src={product?.media[0]?.url}
-                        alt={product?.media[0]?.alt}
+                        src={product?.media?.url}
+                        alt={product?.media?.alt}
                       />
                     </div>
                   }
