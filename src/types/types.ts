@@ -10,7 +10,7 @@ export type homeDataResponseType =
           menuDataWithOutParentCategories: Array<menuDataWithOutParentCategories>;
         };
         parentCategories: Array<parentCategoryType>;
-        specialOffer: Array<categoryType>;
+        specialCategories: Array<categoryType>;
       };
     }
   | {
@@ -92,7 +92,7 @@ export type profileType = {
   email: string;
   id: string;
   _count: {
-    WishLists: number;
+    Wishlists: number;
     Orders: number;
     carts: number;
   };
@@ -105,7 +105,7 @@ export type profileType = {
       slug: string;
     };
   }[];
-  wishList: {
+  Wishlists: {
     id: number;
     product: {
       name: string;
