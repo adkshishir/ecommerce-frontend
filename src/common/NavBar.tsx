@@ -11,7 +11,7 @@ import {
 import Link from 'next/link';
 
 const NavBar = () => {
-  const { homePageData } = useContext(MyContext);
+  const { homePageData, profile } = useContext(MyContext);
   const [menuWithParent, setMenuWithParent] = useState<
     menuDataWithParentCategories[]
   >([]);
@@ -53,7 +53,7 @@ const NavBar = () => {
               id='navbar-vertical'
               style={{ width: 'calc(100% - 30px)', zIndex: 999 }}>
               <div className='navbar-nav w-100'>
-                {menuWithParent?.map((item,index) => (
+                {menuWithParent?.map((item, index) => (
                   <div key={index} className='nav-item dropdown dropright'>
                     <Link
                       href='#'
@@ -62,10 +62,10 @@ const NavBar = () => {
                       {item?.name}{' '}
                       <i className='fa fa-angle-right float-right mt-1' />
                     </Link>
-                    <div className='dropdown-menu position-absolute rounded-0 border-0 m-0'>
-                      {item?.categories?.map((category,index) => (
+                    <div className='dropdown-menu position-absolute max-height-500 overflow-auto rounded-0 border-0 m-0'>
+                      {item?.categories?.map((category, index) => (
                         <Link
-                          key={`${category?.id+index}`}
+                          key={`${category?.id + index}`}
                           href={`/shop?category=${category?.slug}`}
                           className='dropdown-item'>
                           {category?.name}
@@ -108,7 +108,7 @@ const NavBar = () => {
                           data-toggle='dropdown'>
                           {data?.name} <i className='fa fa-angle-down mt-1' />
                         </Link>
-                        <div className='dropdown-menu bg-white rounded-0 border-0 m-0'>
+                        <div className='dropdown-menu search-menu bg-white rounded-0 border-0 m-0'>
                           {data?.products?.map((product) => {
                             return (
                               <Link
@@ -153,22 +153,22 @@ const NavBar = () => {
                   </a>
                 </div>
                 <div className='navbar-nav ml-auto py-0 d-none d-lg-block'>
-                  <a href='' className='btn px-0'>
+                  <Link href='/wishlist' className='btn px-0'>
                     <i className='fas fa-heart text-primary' />
                     <span
                       className='badge text-secondary border border-secondary rounded-circle'
                       style={{ paddingBottom: 2 }}>
-                      0
+                      {profile?._count?.WishLists||0}
                     </span>
-                  </a>
-                  <a href='' className='btn px-0 ml-3'>
+                  </Link>
+                  <Link href='/cart' className='btn px-0 ml-3'>
                     <i className='fas fa-shopping-cart text-primary' />
                     <span
                       className='badge text-secondary border border-secondary rounded-circle'
                       style={{ paddingBottom: 2 }}>
-                      0
+                      {profile?._count?.carts||0}
                     </span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </nav>
