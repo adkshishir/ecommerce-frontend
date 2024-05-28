@@ -16,33 +16,41 @@ export default function Search() {
   const [products, setProducts] = React.useState<any>([]);
   const [search, setSearch] = React.useState<string>('');
   const [options, setOptions] = React.useState<readonly Product[]>([]);
-  let loading = open && options.length === 0;
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
     getProducts();
-  }, [open, search]);
+  }, [search]);
   async function getProducts() {
     try {
-      loading = true;
       setOptions([]);
-      setTimeout(async () => {
-        let fetchProducts = await Request.get(Api.SEARCH_PRODUCTS);
-        console.log({ fetchProducts });
-        if (fetchProducts?.data?.products.length > 0)
-         { setProducts(await fetchProducts.data.products);
-          setOptions(await fetchProducts.data.products);}
-        else {
-          setOptions([
-            {
-              name: 'Not Found',
-              slug: 'oops',
-            },
-          ]);
-        }
-      }, 1000);
+      if (!loading) {
+        console.log(search, 'searching');
+        setTimeout(async () => {
+          let fetchProducts = await Request.get(
+            Api.SEARCH_PRODUCTS + '?name=' + search
+          );
+          console.log(fetchProducts?.data?.products);
+          if (fetchProducts?.data?.products?.length > 0) {
+            setProducts(await fetchProducts.data.products);
+            // setOptions(await fetchProducts.data.products);
+          } else {
+            setOptions([
+              {
+                name: 'Not Found',
+                slug: '/',
+              },
+            ]);
+            setProducts([
+              {
+                name: 'Not Found',
+                slug: '/',
+              },
+            ]);
+          }
+          setLoading(false);
+        }, 2000);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +84,7 @@ export default function Search() {
       {open && (
         <div
           className='w-100 search-menu position-absolute rounded shadow bg-white '
-          style={{ zIndex: 1, top: '50px' }}>
+          style={{ zIndex: 10, top: '50px' }}>
           {products.map((product: Product, index: number) => (
             <div
               key={index}
