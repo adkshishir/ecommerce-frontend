@@ -25,15 +25,13 @@ export default function Search() {
     try {
       setOptions([]);
       if (!loading) {
-        console.log(search, 'searching');
+        setLoading(true);
         setTimeout(async () => {
           let fetchProducts = await Request.get(
             Api.SEARCH_PRODUCTS + '?name=' + search
           );
-          console.log(fetchProducts?.data?.products);
           if (fetchProducts?.data?.products?.length > 0) {
             setProducts(await fetchProducts.data.products);
-            // setOptions(await fetchProducts.data.products);
           } else {
             setOptions([
               {
@@ -49,11 +47,9 @@ export default function Search() {
             ]);
           }
           setLoading(false);
-        }, 2000);
+        }, 100);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   return (
