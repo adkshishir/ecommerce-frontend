@@ -5,6 +5,10 @@ const LOGIN = `${BASE_URL}/api/auth/login`;
 const SIGNUP = `${BASE_URL}/api/auht/register`;
 const PARENT_CATEGORIES = `${BASE_URL}/api/parent-categories`;
 const CATEGORIES = `${BASE_URL}/api/categories`;
+const PRODUCTS = `${BASE_URL}/api/products`;
+const ADD_TO_CART = `${BASE_URL}/api/cart`;
+const CART = `${BASE_URL}/api/cart`;
+const AUTH_PROFILE = `${BASE_URL}/api/auth/profile`;
 
 export default {
   BASE_URL,
@@ -14,4 +18,9 @@ export default {
   SIGNUP,
   PARENT_CATEGORIES,
   CATEGORIES,
+  PRODUCTS,
+  ADD_TO_CART,
+  CART,
+  AUTH_PROFILE
 };
+ 
