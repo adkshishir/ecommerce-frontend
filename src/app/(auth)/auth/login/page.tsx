@@ -15,7 +15,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Request from '@/src/helper/Request';
 import Api from '@/src/constants/Api';
-
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 function Copyright(props: any) {
   return (
     <Typography
@@ -37,6 +38,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const router = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -47,12 +49,18 @@ export default function SignIn() {
     const { success, data } = response;
     if (success) {
       localStorage.setItem('token', data.token);
-      window.location.href = '/';
+      toast.success('Logged in successfully');
+      router.push('/');
     } else {
       console.log(data, 'error while signing in');
+      toast.error(data.message || 'Error while signing in');
     }
   };
-
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      router.push('/');
+    }
+  }, []);
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component='main' maxWidth='xs'>
