@@ -72,7 +72,7 @@ const SideBar = () => {
                   <label
                     className='custom-control-label'
                     htmlFor={`price-${price}`}>
-                    ${price}-${price + 1000}
+                    Rs.{price} - Rs.{price + 1000}
                   </label>
                   <span className='badge border font-weight-normal'>
                     {/* 150 */}
@@ -103,7 +103,6 @@ const SideBar = () => {
             <label className='custom-control-label' htmlFor='color-all'>
               All Color
             </label>
-            {/* <span className='badge border font-weight-normal'>1000</span> */}
           </div>
           {colors.map((color) => (
             <div className='custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3'>
@@ -150,7 +149,7 @@ const SideBar = () => {
             <label className='custom-control-label' htmlFor='size-all'>
               All Size
             </label>
-            <span className='badge border font-weight-normal'>1000</span>
+            <span className='badge border font-weight-normal'></span>
           </div>
           {sizes.map((size) => (
             <div className='custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3'>
