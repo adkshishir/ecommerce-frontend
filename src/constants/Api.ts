@@ -10,6 +10,7 @@ const ADD_TO_CART = `${BASE_URL}/api/cart`;
 const CART = `${BASE_URL}/api/cart`;
 const AUTH_PROFILE = `${BASE_URL}/api/auth/profile`;
 const WISHLIST = `${BASE_URL}/api/wishlist`;
+const WISHLIST_USER = `${BASE_URL}/api/wishlist/user`
 
 export default {
   BASE_URL,
@@ -23,6 +24,7 @@ export default {
   ADD_TO_CART,
   CART,
   AUTH_PROFILE,
-  WISHLIST
+  WISHLIST,
+  WISHLIST_USER
 };
  
