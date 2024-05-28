@@ -1,6 +1,6 @@
 'use client';
 import React, { ReactNode, createContext, useEffect, useState } from 'react';
-import { homeDataResponseType, productType } from '../types/types';
+import { homeDataResponseType, productType, profileType } from '../types/types';
 import Request from '../helper/Request';
 import Api from '../constants/Api';
 interface myContextType {
@@ -10,21 +10,34 @@ interface myContextType {
   >;
   products: productType[];
   setProducts: React.Dispatch<React.SetStateAction<productType[]>>;
+  profile: profileType|undefined;
+  setProfile: React.Dispatch<React.SetStateAction<profileType|undefined>>;
 }
 const initialState = {
   homePageData: undefined,
-  setHomePageData: () => { },
+  setHomePageData: () => {},
   products: [],
-  setProducts: () => { },
+  setProducts: () => {},
+  profile: undefined,
+  setProfile: () => {},
 };
 export const MyContext = createContext<myContextType>(initialState);
 
 const MyProvider = ({ children }: { children: ReactNode }) => {
   const [homePageData, setHomePageData] = useState<homeDataResponseType>();
   const [products, setProducts] = useState<productType[]>([]);
-  
+  const [profile, setProfile] = useState<profileType>();
+
   return (
-    <MyContext.Provider value={{ homePageData, setHomePageData, products, setProducts }}>
+    <MyContext.Provider
+      value={{
+        homePageData,
+        setHomePageData,
+        products,
+        setProducts,
+        profile,
+        setProfile,
+      }}>
       {children}
     </MyContext.Provider>
   );
