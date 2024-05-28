@@ -68,6 +68,7 @@ const ProductSection = async ({
           products?.map((product) => (
             <ProductCard
               key={product.id}
+              id={product.id}
               image={product.media[0]?.url || '/img/product-1.jpg'}
               name={product.name}
               markedPrice={product.markedPrice}
